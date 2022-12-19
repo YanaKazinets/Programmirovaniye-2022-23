@@ -57,5 +57,6 @@ int main()
 		OutputFile << arr[i] << endl; // Existing
 	}
 	OutputFile.close();
-	return 0;
+	
+	return EXIT_SUCCESS;
 }
