@@ -2,20 +2,26 @@
 
 using namespace std;
 
-class FieldPrint {
-	int x = 0;
-	int y = 0;
-	int z = 0;
-
-	void printX() {
-		cout << this->x;
-	};
-	void printY() {
-		cout << this->y;
-	};
-	void printZ() {
-		cout << this->z;
-	};
+class Locked
+{
+	friend struct Key;
+	int a;
+	void print()
+	{
+		cout << this->a << endl;
+	}
+};
+struct Key
+{
+	void print(Locked t)
+	{
+		void (Locked:: * adress)() = &Locked::print;
+		(t.*adress)();
+	}
+	void swapper(Locked& t, int a)
+	{
+		t.a = a;
+	}
 };
 
 class Min {
@@ -50,19 +56,11 @@ int main() {
 
 	cout << sizeof(Min) << ' ' << sizeof(Max) << endl;
 
-	FieldPrint inst;
+	Locked test;
+	Key tost;
 
-	int* a = (int*)(&inst);
-	cout << *a << endl;
-	*a = 10;
-	cout << *a << endl;
-	a++;
-	*a = 20;
-	cout << *a << endl;
-	a++;
-	*a = 30;
-	cout << *a << endl;
-
+	tost.swapper(test, 228);
+	tost.print(test);
 
 	return EXIT_SUCCESS;
 };
